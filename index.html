@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiss Day | Forever Yours</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #800000 0%, #2b0000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Floating background kisses */
+        .bg-kiss {
+            position: absolute;
+            color: rgba(255, 0, 0, 0.1);
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        /* Custom Popup */
+        #custom-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 100;
+            text-align: center;
+            min-width: 280px;
+            color: #333;
+        }
+
+        #popup-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; display: block; }
+        .close-popup-btn {
+            background: #ff0040;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 99;
+        }
+
+        /* Card Container */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(255, 0, 64, 0.2);
+        }
+
+        h2 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin-bottom: 15px; color: #ff0040; text-shadow: 0 0 10px rgba(255,0,64,0.5); }
+        .question { font-size: 1.1rem; margin-bottom: 25px; letter-spacing: 0.5px; }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: 1px solid #ff0040;
+            background: transparent;
+            color: #ff0040;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: #ff0040; color: white; box-shadow: 0 0 15px #ff0040; }
+
+        /* Kiss Page */
+        #kiss-page { display: none; }
+        .slogan { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #ff85a2; margin-bottom: 30px; line-height: 1.5; }
+        
+        .kiss-icon { font-size: 100px; display: block; margin-bottom: 20px; filter: drop-shadow(0 0 10px #ff0040); animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #kiss-btn {
+            background: #ff0040;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        #final-msg {
+            display: none;
+            position: fixed;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff0040;
+            z-index: 101;
+            text-align: center;
+            width: 100%;
+            text-shadow: 0 0 20px rgba(255,255,255,0.6);
+        }
+
+        .falling-item {
+            position: fixed; top: -10%; z-index: 50; animation: fall linear forwards;
+        }
+
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="overlay"></div>
+
+    <script>
+        // Create initial floating kisses
+        for (let i = 0; i < 15; i++) {
+            const k = document.createElement('div');
+            k.className = 'bg-kiss';
+            k.innerHTML = '💋';
+            k.style.left = Math.random() * 100 + 'vw';
+            k.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(k);
+        }
+    </script>
+
+    <div id="custom-popup">
+        <span id="popup-text"></span>
+        <button class="close-popup-btn" onclick="closePopup()">Try Again</button>
+    </div>
+
+    <div class="card" id="quiz-page">
+        <h2>Sweet Memory 💋</h2>
+        <p class="question">Mana iddhari first kiss eppudu?</p>
+        <button class="btn" onclick="handleChoice(1)">27th may 2022</button>
+        <button class="btn" onclick="handleChoice(2)">15th aug 2023</button>
+        <button class="btn" onclick="handleChoice(3)">21st feb 2023</button>
+        <button class="btn" onclick="handleChoice(4)">18th July 2022</button>
+    </div>
+
+    <div class="card" id="kiss-page">
+        <span class="kiss-icon">💋</span>
+        <div class="slogan">"A kiss from you makes my soul catch fire. I want to lose myself in your lips and forget the rest of the world exists."</div>
+        <button id="kiss-btn" onclick="celebrate()">Kiss Taken</button>
+    </div>
+
+    <div id="final-msg">Yay! Thank You Potti 💖</div>
+
+    <script>
+        function handleChoice(optionNum) {
+            const popup = document.getElementById('custom-popup');
+            const overlay = document.getElementById('overlay');
+            const text = document.getElementById('popup-text');
+            const btn = document.querySelector('.close-popup-btn');
+
+            if (optionNum === 3) {
+                text.innerHTML = "Muah Correcttttt Answer 💋";
+                btn.innerText = "Claim My Kiss";
+                btn.onclick = function() {
+                    closePopup();
+                    document.getElementById('quiz-page').style.display = 'none';
+                    document.getElementById('kiss-page').style.display = 'block';
+                };
+            } else {
+                text.innerHTML = "Chi Pove Pottidhana 😠";
+                btn.innerText = "Try Again";
+                btn.onclick = closePopup;
+            }
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('custom-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function celebrate() {
+            document.getElementById('kiss-page').style.opacity = '0.1';
+            document.getElementById('final-msg').style.display = 'block';
+            
+            const items = ['💋', '❤️', '💋', '💄', '🔥'];
+            for (let i = 0; i < 120; i++) {
+                setTimeout(() => {
+                    const item = document.createElement('div');
+                    item.classList.add('falling-item');
+                    item.innerHTML = items[Math.floor(Math.random() * items.length)];
+                    item.style.left = Math.random() * 100 + "vw";
+                    item.style.fontSize = (Math.random() * 25 + 20) + "px";
+                    item.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                    document.body.appendChild(item);
+                }, i * 60);
+            }
+        }
+    </script>
+</body>
+</html>
